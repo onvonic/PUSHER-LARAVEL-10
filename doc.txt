@@ -72,8 +72,8 @@ PUSHER_APP_CLUSTER=ap1
             cluster: 'ap1'
         });
 
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function (data) {
+        var channel = pusher.subscribe('myChannel');
+        channel.bind('myEvent', function (data) {
             // alert(JSON.stringify(data));
             document.getElementById('message').textContent = JSON.stringify(data.message);
         });
@@ -84,18 +84,18 @@ PUSHER_APP_CLUSTER=ap1
 <body>
     <h1>Pusher Test</h1>
     <p>
-        Try publishing an event to channel <code>my-channel</code>
-        with event name <code>my-event</code>.
+        Try publishing an event to channel <code>myChannel</code>
+        with event name <code>myEvent</code>.
     </p>
 </body>
 
 --------------------------------------------------------------------------------------------------
-> php artisan make:event MyEvent
+> php artisan make:event MyNotification
 --------------------------------------------------------------------------------------------------
 
-class MyEvent "implements ShouldBroadcast"
+class MyNotification "implements ShouldBroadcast"
 
-MyEvent.php
+MyNotification.php
 
 <?php
 
@@ -109,7 +109,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MyEvent implements ShouldBroadcast
+class MyNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
@@ -128,12 +128,12 @@ class MyEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return ['my-channel'];
+        return ['myChannel'];
     }
 
     public function broadcastAs()
     {
-        return 'my-event';
+        return 'myEvent';
     }
 }
 
@@ -142,6 +142,6 @@ class MyEvent implements ShouldBroadcast
 --------------------------------------------------------------------------------------------------
 
 Route::get('test', function(){
-    event(new \App\Events\MyEvent('hello world'));
+    event(new \App\Events\MyNotification('hello world'));
     return "success";
 });
