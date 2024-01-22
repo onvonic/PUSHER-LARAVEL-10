@@ -93,6 +93,8 @@ PUSHER_APP_CLUSTER=ap1
 > php artisan make:event MyEvent
 --------------------------------------------------------------------------------------------------
 
+class MyEvent "implements ShouldBroadcast"
+
 MyEvent.php
 
 <?php
