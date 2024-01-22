@@ -95,9 +95,9 @@ php artisan make:event MyNotification
 
 ## MyNotification
 
-```php
 class MyNotification "implements ShouldBroadcast"
 
+```php
 MyNotification.php
 
 <?php
